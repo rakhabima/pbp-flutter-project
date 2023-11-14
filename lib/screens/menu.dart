@@ -1,12 +1,15 @@
 import 'package:flutter/material.dart';
+import 'package:shopping_list_task/widgets/left_drawer.dart';
+import 'package:shopping_list_task/screens/addbook_form.dart';
+import 'package:shopping_list_task/widgets/shop_card.dart';
 
 class MyHomePage extends StatelessWidget {
   MyHomePage({Key? key}) : super(key: key);
 
   final List<ShopItem> items = [
-    ShopItem("Lihat Item", Icons.checklist, Colors.blue),
-    ShopItem("Tambah Item", Icons.add_shopping_cart, Colors.green),
-    ShopItem("Logout", Icons.logout, Colors.red),
+    ShopItem("Lihat Produk", Icons.checklist),
+    ShopItem("Tambah Produk", Icons.add_shopping_cart),
+    ShopItem("Logout", Icons.logout),
   ];
 
   // This widget is the home page of your application. It is stateful, meaning
@@ -25,7 +28,11 @@ class MyHomePage extends StatelessWidget {
         title: const Text(
           'Shopping List',
         ),
+        backgroundColor: Colors.indigo,
+        foregroundColor: Colors.white,
       ),
+      // Masukkan drawer sebagai parameter nilai drawer dari widget Scaffold
+      drawer: const LeftDrawer(),
       body: SingleChildScrollView(
         // Widget wrapper yang dapat discroll
         child: Padding(
@@ -67,13 +74,7 @@ class MyHomePage extends StatelessWidget {
   }
 }
 
-class ShopItem {
-  final String name;
-  final IconData icon;
-  final Color color;
 
-  ShopItem(this.name, this.icon, this.color);
-}
 
 class ShopCard extends StatelessWidget {
   final ShopItem item;
@@ -83,15 +84,25 @@ class ShopCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Material(
-      color: item.color,
+      color: Colors.indigo,
       child: InkWell(
-        // Area responsive terhadap sentuhan
+        // Area responsif terhadap sentuhan
         onTap: () {
           // Memunculkan SnackBar ketika diklik
           ScaffoldMessenger.of(context)
             ..hideCurrentSnackBar()
             ..showSnackBar(SnackBar(
                 content: Text("Kamu telah menekan tombol ${item.name}!")));
+
+          // Navigate ke route yang sesuai (tergantung jenis tombol)
+          if (item.name == "Tambah Produk") {
+            Navigator.push(
+              context,
+              MaterialPageRoute(
+                builder: (context) => ShopFormPage(),
+              ),
+            );
+          }
         },
         child: Container(
           // Container untuk menyimpan Icon dan Text
