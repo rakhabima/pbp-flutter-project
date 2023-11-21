@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:shopping_list_task/screens/booklist_page.dart';
+import 'package:shopping_list_task/screens/list_product.dart';
 import 'package:shopping_list_task/screens/menu.dart';
 import 'package:shopping_list_task/screens/addbook_form.dart';
 
@@ -60,17 +60,17 @@ class LeftDrawer extends StatelessWidget {
                       builder: (context) => ShopFormPage(),
                     ));
               }),
-          ListTile(
-              leading: const Icon(Icons.checklist),
-              title: const Text('Lihat Buku'),
-              // Bagian redirection ke ShopFormPage
-              onTap: () {
-                Navigator.pushReplacement(
-                    context,
-                    MaterialPageRoute(
-                      builder: (context) => BookListPage(itemList: itemList),
-                    ));
-              }),
+              ListTile(
+            leading: const Icon(Icons.shopping_basket),
+            title: const Text('Daftar Produk'),
+            onTap: () {
+              // Route menu ke halaman produk
+              Navigator.push(
+                context,
+                MaterialPageRoute(builder: (context) => const ProductPage()),
+              );
+            },
+          ),
         ],
       ),
     );
